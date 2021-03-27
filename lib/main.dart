@@ -37,6 +37,10 @@ class MyApp extends StatelessWidget {
       //   CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
       // },
       initialRoute: '/home',
+      // routes: {
+      //   CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
+      //   CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
+      // },
       getPages: [
         GetPage(
             name: CategoryMealsScreen.routeName,
@@ -45,12 +49,14 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: MealDetailScreen.routeName, page: () => MealDetailScreen()),
       ],
-      onGenerateRoute: (settings) {
-        print(settings.arguments);
-        return MaterialPageRoute(
-          builder: (ctx) => CategoriesScreen(),
-        );
-      },
+      unknownRoute: GetPage(name: '/notfound', page: () => CategoriesScreen()),
+      // onGenerateRoute is used for false dynamic routes and redirects
+      // onGenerateRoute: (settings) {
+      //   print(settings.arguments);
+      //   return MaterialPageRoute(
+      //     builder: (ctx) => CategoriesScreen(),
+      //   );
+      // },
       // onUnknownRoute: ,
     );
   }
