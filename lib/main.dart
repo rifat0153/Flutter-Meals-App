@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:meals/screens/category_meals_screen.dart';
+import 'package:meals/screens/meal_detail_screen.dart';
 import 'screens/categories_screen.dart';
 
 void main() {
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.pink,
@@ -31,9 +33,25 @@ class MyApp extends StatelessWidget {
             )),
       ),
       home: CategoriesScreen(),
-      routes: {
-        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
+      // routes: {
+      //   CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
+      // },
+      initialRoute: '/home',
+      getPages: [
+        GetPage(
+            name: CategoryMealsScreen.routeName,
+            page: () => CategoryMealsScreen()),
+        GetPage(name: '/home', page: () => CategoriesScreen()),
+        GetPage(
+            name: MealDetailScreen.routeName, page: () => MealDetailScreen()),
+      ],
+      onGenerateRoute: (settings) {
+        print(settings.arguments);
+        return MaterialPageRoute(
+          builder: (ctx) => CategoriesScreen(),
+        );
       },
+      // onUnknownRoute: ,
     );
   }
 }
