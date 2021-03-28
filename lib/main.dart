@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meals/screens/category_meals_screen.dart';
 import 'package:meals/screens/favorites_screen.dart';
+import 'package:meals/screens/filters_screen.dart';
 import 'package:meals/screens/meal_detail_screen.dart';
 import 'package:meals/screens/tab_screen.dart';
 import 'screens/categories_screen.dart';
@@ -48,19 +49,13 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: CategoryMealsScreen.routeName,
             page: () => CategoryMealsScreen()),
+        GetPage(name: '/', page: () => TabsScreen()),
         GetPage(name: '/home', page: () => CategoriesScreen()),
+        GetPage(name: '/filters', page: () => FiltersScreen()),
         GetPage(
             name: MealDetailScreen.routeName, page: () => MealDetailScreen()),
       ],
       unknownRoute: GetPage(name: '/notfound', page: () => CategoriesScreen()),
-      // onGenerateRoute is used for false dynamic routes and redirects
-      // onGenerateRoute: (settings) {
-      //   print(settings.arguments);
-      //   return MaterialPageRoute(
-      //     builder: (ctx) => CategoriesScreen(),
-      //   );
-      // },
-      // onUnknownRoute: ,
     );
   }
 }
