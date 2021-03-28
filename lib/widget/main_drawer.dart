@@ -38,14 +38,14 @@ class MainDrawer extends StatelessWidget {
             title: 'Meals',
             icons: Icons.restaurant,
             tapHandler: () {
-              Get.toNamed('/');
+              Get.offNamed('/');
             },
           ),
           buildListTile(
             title: 'Filters',
             icons: Icons.settings,
             tapHandler: () {
-              Get.toNamed(FiltersScreen.routeName);
+              Get.offNamed(FiltersScreen.routeName);
             },
           ),
         ],
