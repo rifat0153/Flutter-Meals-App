@@ -10,6 +10,7 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeItem;
 
   MealItem({
     @required this.id,
@@ -18,6 +19,7 @@ class MealItem extends StatelessWidget {
     @required this.duration,
     @required this.complexity,
     @required this.affordability,
+    @required this.removeItem,
   });
 
   String get complexityText {
@@ -52,11 +54,22 @@ class MealItem extends StatelessWidget {
     }
   }
 
-  void selectMeal() {
-    Get.toNamed(
+  void selectMeal() async {
+    var mealId = await Get.toNamed(
       MealDetailScreen.routeName,
       arguments: id,
     );
+
+    if (mealId != null) {
+      removeItem(mealId);
+    }
+
+    // Get.toNamed(
+    //   MealDetailScreen.routeName,
+    //   arguments: id,
+    // ).then((result) {
+    //   print('mealId: $result');
+    // });
   }
 
   @override

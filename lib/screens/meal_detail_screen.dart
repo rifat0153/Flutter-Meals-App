@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meals/data/dummy_data.dart';
+import 'package:meals/screens/categories_screen.dart';
 
 class MealDetailScreen extends StatelessWidget {
   static const routeName = '/meal-detail';
@@ -80,6 +81,12 @@ class MealDetailScreen extends StatelessWidget {
                     }))
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+        onPressed: () {
+          Get.back(result: mealId);
+        },
       ),
     );
   }
