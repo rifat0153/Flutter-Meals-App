@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/screens/category_meals_screen.dart';
-import 'package:meals/screens/favorites_screen.dart';
 import 'package:meals/screens/filters_screen.dart';
 import 'package:meals/screens/meal_detail_screen.dart';
 import 'package:meals/screens/tab_screen.dart';
@@ -28,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
 
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
@@ -51,6 +51,27 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _toggleFavorite(String mealId) {
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isMealFavorite(String id) {
+    return _favoriteMeals.any((meal) {
+      return meal.id == id;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -71,24 +92,18 @@ class _MyAppState extends State<MyApp> {
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.bold)),
       ),
-      home: TabsScreen(),
-      // routes: {
-      //   CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
-      // },
-      // initialRoute: '/home',
-      // routes: {
-      //   CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
-      //   CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
-      // },
+      home: TabsScreen(_favoriteMeals),
       getPages: [
         GetPage(
             name: CategoryMealsScreen.routeName,
             page: () => CategoryMealsScreen(_availableMeals)),
-        GetPage(name: '/', page: () => TabsScreen()),
+        GetPage(name: '/', page: () => TabsScreen(_favoriteMeals)),
         GetPage(name: '/home', page: () => CategoriesScreen()),
-        GetPage(name: '/filters', page: () => FiltersScreen(_filters ,_setFilters)),
         GetPage(
-            name: MealDetailScreen.routeName, page: () => MealDetailScreen()),
+            name: '/filters', page: () => FiltersScreen(_filters, _setFilters)),
+        GetPage(
+            name: MealDetailScreen.routeName,
+            page: () => MealDetailScreen(_toggleFavorite, _isMealFavorite)),
       ],
       unknownRoute: GetPage(name: '/notfound', page: () => CategoriesScreen()),
     );
