@@ -45,7 +45,7 @@ class MainDrawer extends StatelessWidget {
             title: 'Filters',
             icons: Icons.settings,
             tapHandler: () {
-              Get.offNamed(FiltersScreen.routeName);
+              Get.toNamed(FiltersScreen.routeName);
             },
           ),
         ],
